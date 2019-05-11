@@ -1,0 +1,86 @@
+/*result out put*/
+div.result-of-student{
+  border:3px solid black;
+  
+}
+.name-of-school{
+  
+  font-size: 26px;
+
+font-weight: bold;
+}
+.address-of-school{
+  
+
+font-weight: bold;
+}
+
+.school-info{
+  
+  
+}
+.logo-of-school img{
+width: 41%;
+}
+.email-of-school{
+  
+  font-weight: normal;
+}
+.year-of-marksheet{
+  text-align: center;
+
+background-color: black;
+
+color: white;
+
+
+
+padding-top: 10px;
+
+padding-bottom: 10px;
+
+font-size: 21px;
+}
+.student-info{
+  padding: 22px;
+}
+.roll-left span{
+  float: right;
+  margin-right: 20px;
+}
+.roll-right{
+
+}
+.grede-sheet {
+text-align: center;
+
+background-color: black;
+
+
+
+color: white;
+margin-bottom: 25px;
+
+font-weight: bold;
+padding: 10px;
+}
+.body-of-marksheet{
+  margin-left: -3px;
+
+margin-right: -1px;
+}
+.topic{
+  border:1px solid black;
+}
+.topic-attend{
+	border:3px solid black;
+}
+#attendance-head span{
+	margin-left: 2px;
+
+margin-top: 55px;
+}
+.print:hover{
+background-color: red;
+color: black;
+}

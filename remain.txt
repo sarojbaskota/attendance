@@ -1,0 +1,6 @@
+1.Edit employee checkin and checkout 
+2.delete employee checkin and checkout
+3.leave reject reason send(admin) and shows in user dashboard
+4.varify email
+5.reset password.
+6.register protection.

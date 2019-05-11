@@ -1,0 +1,36 @@
+1. data table use in all table 
+2.notification not working 
+3.for open modal api code for individual
+
+4.ajax call 
+<script>
+  $(function(){
+    $('#view').click(function(event){
+      event.preventDefault();
+      var id = ($("#view").data('uid'));
+      
+      $.ajax({
+          url: 'view_individual_admin/'+id,
+          type: 'GET',
+          success: function(response, data, mata){
+            $('#myModal').modal('show');
+            //$('#show').html(response);
+            $(".modal-title").html(response.name);
+            if ((response.role) == 1){
+            var role = "Admin"; }
+             else{
+             var role = "Employee";
+             }
+            $(".modal-role").html(role);
+
+            $(".modal-email").html(response.email);
+            $(".modal-created-at").html(response.created_at);
+
+          }
+
+      }); 
+      });
+  });
+</script>
+
+5.
