@@ -10,45 +10,29 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+	/* 
+	---------------------------------------------------
+	------------Routes For Auth------------------
+	---------------------------------------------------
+	*/
 	Route::get('/', function () {
-	return view('auth.login');
+		return view('auth.login');
 	});
-/*
-added by saroj
-*/
-	/* 
-	---------------------------------------------------
-	------------Authentication Routes------------------
-	---------------------------------------------------
-	*/
-	Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-	Route::post('login', 'Auth\LoginController@login');
-	Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-	/* 
-	---------------------------------------------------
-	------------Password Reset Routes------------------
-	---------------------------------------------------
-	*/
-	Route::get('reset_password', 'ForgotPasswordController@index')->name('reset_password');
-	Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-	Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-	Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-	
+	Auth::routes([
+		'register' => false,
+	]);
 	/* 
 	---------------------------------------------------
 	------------employee dashboard routes------------------
 	---------------------------------------------------
 	*/
 	Route::group(['prefix' => 'employee_dashboard','middleware' => 'employee'], function(){
-	Route::get('/', function () {
-	return view('employee.dashboard');
-	});
-	Route::get('/', 'Employee\EmployeeController@index')->name('employee_dashboard');
-	Route::post('/checkin', 'Employee\EmployeeController@EmployeeCheckinStore')->name('checkin');
-	Route::post('/', 'Employee\EmployeeController@EmployeeOfficeCheckout');
-	Route::post('/break_checkin', 'Employee\EmployeeBreakController@EmployeeBreakCheckin');
-	Route::post('/break_checkout', 'Employee\EmployeeBreakController@EmployeeBreakCheckout');
-
+		Route::get('/', 'Employee\EmployeeController@index')->name('employee_dashboard');
+		Route::post('/checkin', 'Employee\EmployeeController@checkin');
+		Route::post('/checkout', 'Employee\EmployeeController@checkout');
+		Route::post('/break-checkout', 'Employee\EmployeeBreakController@breakCheckout');
+		Route::post('/break-checkin', 'Employee\EmployeeBreakController@breakCheckin');
+		// Route::post('/leaves', 'Employee\EmployeeBreakController@breakCheckin');
 	});
 
 	/* 

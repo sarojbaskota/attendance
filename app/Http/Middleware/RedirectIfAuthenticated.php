@@ -21,7 +21,7 @@ class RedirectIfAuthenticated
            if(auth()->user()->role === 1 ){
             return redirect('/admin_dashboard');
            }else{
-            return redirect('/emp_dashboard');
+            return redirect('/employee_dashboard');
            }
         }
 

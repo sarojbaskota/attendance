@@ -22,12 +22,32 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * Auth guard
+     *
+     * @var
+     */
+    protected $auth;
+     
+     /**
+     * lockoutTime
+     *
+     * @var
+     */
+    protected $lockoutTime;
+     
+    /**
+     * maxLoginAttempts
+     *
+     * @var
+     */
+    protected $maxLoginAttempts;
+    /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = '';
-
+    
     /**
      * Create a new controller instance.
      *
@@ -43,14 +63,43 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
-        if ($this->hasTooManyLoginAttempts($request)) {
+       /* If the class is using the ThrottlesLogins trait, we can automatically throttle
+        the login attempts for this application. We'll key this by the username and
+        the IP address of the client making these requests into this application. */
+
+        /*if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
             return $this->sendLockoutResponse($request);
-        }
+        }*/
+        
+      /**
+       * Create a new controller instance.
+       *
+       * LoginController constructor.
+       * @param Guard $auth
+       */
+        function __construct(Guard $auth)
+      {
+          $this->middleware('guest', ['except' => 'logout']);
+          $this->auth = $auth;
+          $this->lockoutTime  = 1;    //lockout for 1 minute (value is in minutes)
+          $this->maxLoginAttempts = 3;    //lockout after 3 attempts
+      }
+      
+      /**
+       * Determine if the user has too many failed login attempts.
+       *
+       * @param  \Illuminate\Http\Request  $request
+       * @return bool
+       */
+       function hasTooManyLoginAttempts(Request $request)
+      {
+          return $this->limiter()->tooManyAttempts(
+              $this->throttleKey($request), $this->maxLoginAttempts, $this->lockoutTime
+          );
+      }
+
         if ($this->attemptLogin($request)) {
            //to sure admin or not
               if(Auth::user()->role == 1){

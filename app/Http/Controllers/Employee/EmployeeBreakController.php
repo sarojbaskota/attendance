@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Employee;
 
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Breaks;
 use Carbon\Carbon;
-use Auth;
-use Redirect;
-
 class EmployeeBreakController extends Controller
 {
     /**
@@ -34,49 +29,53 @@ class EmployeeBreakController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. when employee enter new entry
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function EmployeeBreakCheckin(Request $request)
+    public function breakCheckout(Request $request)
     {
-        $results = Breaks::select('break_checkout')->where('employee_id',Auth::user()->id)->get();
-        foreach ($results as  $value) {
-           $results = $value->break_checkout;
-        }
-        if($results==NULL){
-        $disabled = true;    
-        return view('employee.dashboard',compact('disabled'))->with('break_message_error', 'You checkout first !!');
-        }
-        else {
-            Breaks::create($request->all());
-             $disabled = true;   
-        return view('employee.dashboard',compact('disabled'))->with('break_checkin_message', 'You checked In');
-        }
+        $validator = \Validator::make($request->all(), [
+            'break_type' => 'required|not_in:0',
+            'user_id' => 'required'
+        ]);
         
-   }
+        if ($validator->fails()) { 
+            return response()->json(['errors' => $validator->errors()->all(),]);
+         }
+        $result = Breaks::UserId()->first();
+        if($result){
+            if($result->break_checkin == NULL){
+                // employee not came in office yet
+                return response()->json(['status' => 'You Already Checkedout Break!!',]);
+            }
+        }
+        Breaks::create([
+            'user_id' => $request->user_id,
+            'break_checkout' => Carbon::now()->toDateTimeString(),
+            'break_type' => $request->break_type,
+            'break_reason' > $request->break_reason, 
+        ]);
+        return response()->json(['status' => 'You Already Checkedout Break!!',]);
+    }
      /**
      * Display the specified resource.
      *
      * @param  update value i check out of employee break
      * @return \Illuminate\Http\Response
      */
-    public function EmployeeBreakCheckout(Request $request)
+    public function breakCheckin(Request $request)
     { 
-         $results = Breaks::select('break_checkout')->where('employee_id',Auth::user()->id)->get();
-            foreach ($results as  $value) {
-                $results = $value->break_checkout;
+        $result = Breaks::UserId()->latest()->first();
+        if($result){
+            if($result->break_checkin == NULL){
+                Breaks::UserId()->update(['break_checkin'=>Carbon::now()->toDateTimeString()]);
+                return response()->json(['status' => 'You Checkedin Break!!',]);
             }
-            if($results ==NULL){
-                $disabled = false;
-                  Breaks::where('employee_id',Auth::user()->id)->update(['break_checkout'=>Carbon::now()->toDateTimeString()]);
-            return view('employee.dashboard',compact('disabled'))->with('break_checkin_message','You Are Checked Out Break!');
         }
-        else {
-            $disabled = false;
-             return view('employee.dashboard',compact('disabled'))->with('break_message_error','Ckeckin Frist !!');
-        }
+        // employee not came in office yet
+        return response()->json(['status' => 'Checkedout Break First!!',]);
     }
     /**
      * Display the specified resource.

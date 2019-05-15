@@ -16,8 +16,8 @@ class CreateBreaksTable extends Migration
         Schema::create('breaks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->timestamp('break_checkin');
-            $table->timestamp('break_checkout')->nullable();
+            $table->timestamp('break_checkout');
+            $table->timestamp('break_checkin')->nullable();
             $table->integer('break_type')->nullable();
             $table->string('break_reason')->nullable();
             $table->timestamps();

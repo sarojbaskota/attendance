@@ -16,10 +16,9 @@ class Employee
     public function handle($request, Closure $next)
     {
         if($request->role == 0){
-                      return $next($request);
-                     }
-                      return redirect('login')->with('error','You have not employee access');
-            
+          return $next($request);
+        }
+        return redirect('login')->with('error','You have not employee access');
     }
 }
 

@@ -1,13 +1,7 @@
-
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
+<footer class="main-footer">
     <div class="pull-right hidden-xs">
-      Anything you want
+      <b>Version</b> 2.4.0
     </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; {{date('Y')}} <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    reserved.
   </footer>
-
- 
