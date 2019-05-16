@@ -9,12 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Timesheet extends Model
 {
     protected $fillable = ['user_id', 'office_checkin', 'office_checkout'];
-
-    // set current time for checkin
-    // public function setTitleAttribute(){
-    //     $this->attributes['office_checkin'] = Carbon::now()->toDateTimeString();
-    // }
-
     /**
      * Get the user that owns the phone.
      */
@@ -37,5 +31,6 @@ class Timesheet extends Model
      *
      * @var array
      */
-    protected $dates = ['office_checkin'];
+    protected $dates = ['office_checkin',];
+    // protected $dates = ['office_checkout'];
 }

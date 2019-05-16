@@ -32,7 +32,11 @@
 		Route::post('/checkout', 'Employee\EmployeeController@checkout');
 		Route::post('/break-checkout', 'Employee\EmployeeBreakController@breakCheckout');
 		Route::post('/break-checkin', 'Employee\EmployeeBreakController@breakCheckin');
-		// Route::post('/leaves', 'Employee\EmployeeBreakController@breakCheckin');
+		Route::get('/leaves', 'Employee\LeaveController@index');
+		Route::post('/leaves', 'Employee\LeaveController@store');
+		Route::get('/attendance-history', 'Employee\EmployeeController@history');
+		Route::get('/leave-history', 'Employee\LeaveController@history');
+		Route::get('/breaks-history', 'Employee\EmployeeBreakController@history');
 	});
 
 	/* 

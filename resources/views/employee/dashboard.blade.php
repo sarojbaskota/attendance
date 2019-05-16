@@ -47,8 +47,7 @@
                     </div>        
                     <div class="form-group">
                       <label fro="reason" class="col-form-label" >Any Specific Reason</label>
-                      <textarea class="form-control" rows="4" cols="40" name="break_reason" placeholder="Reason For Your Break">
-                      </textarea>
+                      <textarea class="form-control" rows="4" cols="40" name="break_reason" placeholder="Reason For Your Break"></textarea>
                     </div>
                     <div class="form-group">
                         @if($breaks)

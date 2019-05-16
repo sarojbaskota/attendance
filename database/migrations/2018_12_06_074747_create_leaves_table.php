@@ -17,8 +17,8 @@ class CreateLeavesTable extends Migration
             $table->increments('id');
             $table->string('user_id');
             $table->string('leave_reason');
-            $table->string('leave_response')->default('Pending');
-            $table->string('status')->nullable();
+            $table->string('leave_response')->nullable();
+            $table->enum('status',['pending','seen'])->default('pending');
             $table->timestamps();
         });
     }

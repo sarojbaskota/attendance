@@ -83,9 +83,10 @@ class EmployeeBreakController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function history()
     {
-        //
+        $breaks = Breaks::UserId()->latest()->paginate(7);
+        return view('employee.breaks_history',compact('breaks'));
     }
 
     /**

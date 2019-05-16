@@ -57,4 +57,15 @@ class EmployeeController extends Controller
          }
          return response()->json(['status' => 'Checkin Frist!!',]);
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function history()
+    {
+        $attendances = Timesheet::UserId()->latest()->paginate(7);
+        return view('employee.attendance_history',compact('attendances'));
+    }
 }
