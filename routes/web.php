@@ -50,15 +50,18 @@
 	});
 	Route::resource('/users', 'UsersController'); 
 	Route::post('/users/{id}', 'UsersController@update'); 
-	
+	Route::get('/admin', 'UsersController@admin'); 
+	Route::get('/employee', 'UsersController@employee'); 
 	Route::get('status_change/{id}', 'UsersController@ChangeStatus')->name('status_change');
+	Route::get('/attendance-history/{id}', 'Employee\EmployeeController@adminHistory');
+	Route::get('/leave-history/{id}', 'Employee\LeaveController@adminHistory');
+	Route::get('/breaks-history/{id}', 'Employee\EmployeeBreakController@adminHistory');
+	Route::get('/performance/{id}', 'PerformanceController@index');
 	/* 
 	---------------------------------------------------
 	------------Employee manage------------------
 	---------------------------------------------------
 	*/
-	Route::get('/employee', 'Authentication\EmployeeController@index');
-	Route::get('/employee/{id}', 'Authentication\EmployeeController@employeeDetails');
 	});
 	
  

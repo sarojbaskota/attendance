@@ -59,7 +59,17 @@ class LeaveController extends Controller
         $leaves = Leaves::UserId()->latest()->paginate(7);
         return view('employee.leave_history',compact('leaves'));
     }
-
+    /**
+     * Show the form for information about employee attendance.
+     *
+     * @param  \App\request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function adminHistory(Request $request, $id)
+    {
+        $leaves = Leaves::where('user_id',$id)->latest()->paginate(7);
+        return view('authentication.leave_history',compact('leaves'));
+    }
     /**
      * Show the form for editing the specified resource.
      *

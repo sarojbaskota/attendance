@@ -38,15 +38,15 @@
           </ul>
         </li>
         <li class="treeview {!! Request::is('employee_dashboard/*') ? 'active' : '' !!}">
-          <a href="#" class="{!!route('employee_dashboard','attendance-history' )!!}">
+          <a href="#" class="{!!route('employee_dashboard','leaves' )!!}">
             <i class="fa fa-pie-chart"></i>
-            <span>Manage History<span>
+            <span>Manage History</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{url('employee_dashboard/attendance-history')}}"><i class="fa fa-circle-o"></i> Attendance</a></li>
+          <li><a href="{{url('employee_dashboard/attendance-history')}}"><i class="fa fa-circle-o"></i> Attendance</a></li>
             <li><a href="{{url('employee_dashboard/leave-history')}}"><i class="fa fa-circle-o"></i> Leaves</a></li>
             <li><a href="{{url('employee_dashboard/breaks-history')}}"><i class="fa fa-circle-o"></i> Break</a></li>
           </ul>

@@ -51,7 +51,7 @@ class EmployeeController extends Controller
          if( $check ){
             if($check->office_checkout == NULL){
                 // set checkout record
-                Timesheet::UserId()->update(['office_checkout' => Carbon::now()->toDateTimeString()]);
+                Timesheet::UserId()->latest()->take(1)->update(['office_checkout' => Carbon::now()->toDateTimeString()]);
                 return response()->json(['status' => 'Checkedout!!',]);
             }
          }
@@ -67,5 +67,16 @@ class EmployeeController extends Controller
     {
         $attendances = Timesheet::UserId()->latest()->paginate(7);
         return view('employee.attendance_history',compact('attendances'));
+    }
+      /**
+     * Show the form for information about employee attendance.
+     *
+     * @param  \App\request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function adminHistory(Request $request, $id)
+    {
+      $attendances = Timesheet::where('user_id',$id)->latest()->paginate(7);
+        return view('authentication.attendance_history',compact('attendances'));
     }
 }

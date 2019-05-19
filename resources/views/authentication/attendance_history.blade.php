@@ -1,11 +1,13 @@
-@extends('layouts.employee')
-@section('content')
+@extends('layouts.admin')
+@section('page-title')
+Users Details
+@endsection
 @section('sub_breadcrumb')
-<li><a href="{{url('employee_dashboard')}}"><i class="glyphicon glyphicon-user"></i> Dashboard > </a></li>
+<li><a href="{{url('administration/employee')}}"><i class="glyphicon glyphicon-user"></i> Employee > </a></li>
 <li><a href="#"><i class="glyphicon glyphicon-book"></i> Attendance History </a></li>
 @endsection
-<div class="row">
-  @foreach($attendances as $attendance)
+@section('content')
+@foreach($attendances as $attendance)
     <div class="col-md-12">
         <div class="box box-success">
                 <div class="box-header with-border">
@@ -29,9 +31,4 @@
     </div>
     {{ $attendances->links() }}
   @endforeach
-</div>
-@endsection
-@section('scripts')
-  <!-- script handling  -->
-  <script src="{{asset('js/employee_leave.js')}}"></script>
 @endsection

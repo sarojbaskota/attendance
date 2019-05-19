@@ -24,7 +24,7 @@
             </dl>
            </div>
            <div class="col-md-6">
-               <img src="{{asset('backend/images/avatar/'.$user->avatar)}}" style="width: 77%;border-radius: 98px; height: 196px;" class="user-image">
+               <img src="{{asset('images/avatar/'.$user->avatar)}}" style="width: 77%;border-radius: 98px; height: 196px;" class="user-image">
            </div>
          </div>
             

@@ -6,3 +6,9 @@ if (! function_exists('fileUpload')) {
         return $file_name;
     }
 }
+if (! function_exists('removeImage')) {
+    function removeImage($filepath, $file) {
+        unlink($filepath.$file);
+        return true;
+    }
+}

@@ -4,21 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Timesheet;
+use App\Breaks;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-
-class authenticationController extends Controller
+use Carbon\Carbon;
+class PerformanceController extends Controller
 {
 /**
 * Display a listing of the resource.
 *
 * @return \Illuminate\Http\Response
 */
-public function index()
-
+public function index($id)
 {
-
-    return view('/dashboard');
+     $datas = DB::table('timesheets')
+            ->Join('breaks', 'timesheets.user_id', '=', 'breaks.user_id')
+            ->select('timesheets.*', 'breaks.*')
+            ->get();
+    // return $employee->created_at->diff($employee->updated_at)->format('%H:%I:%S');
+    return view('authentication.performance',compact('datas'));
 }
 
 /**

@@ -21,17 +21,21 @@
         <li class="header">Navigation</li>
         <!-- Optionally, you can add icons to the links -->
          <li class="{{ Request::segment(2) === 'dashboard' ? 'active' : null }}"><a href="{{url('administration/dashboard')}}"> <i class="fa fa-dashboard"></i> <span>Dashboard</span> <small class="label pull-right bg-green">New Feed</small></a></li>
-        <li class="treeview {{ Request::segment(2) === 'users' ? 'active' : null }}">
-          <a href="#"><i class="glyphicon glyphicon-user"></i> <span>Manage User</span>
+
+         <li class="treeview {{ Request::segment(1) === 'administration' ? 'active' : null }}">
+          <a href="#">
+            <i class="fa fa-pie-chart"></i>
+            <span>Manage Users</span>
             <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="{{url('administration/users')}}">All Users</a></li>
-            <li><a href="{{url('administration/admin')}}">View Admin</a></li>
-            <li><a href="{{url('administration/employee')}}">Employee</a></li>
-            
+            <li class="{{ Request::segment(2) === 'users' ? 'active' : null }}"><a href="{{url('administration/users')}}"><i class="fa fa-circle-o"></i> All</a></li>
+            <li class="{{ Request::segment(2) === 'admin' ? 'active' : null }}"><a href="{{url('administration/admin')}}"><i class="fa fa-circle-o"></i> Admin</a></li>
+            <li class="{{ Request::segment(2) === 'employee' ? 'active' : null }}"><a href="{{url('administration/employee')}}"><i class="fa fa-circle-o"></i>Employee</a></li>
+          </ul>
+        </li>
           </ul>
         </li>
         <li><a href="{{url('administration/employee')}}"><i class="fa fa-link"></i> <span>Employee</span></a></li>

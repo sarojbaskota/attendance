@@ -32,13 +32,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        General UI
-        <small>Preview of UI elements</small>
+        Attendance
+        <small>Track You Ever</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">UI</a></li>
-        <li class="active">General</li>
+       @yield('sub_breadcrumb')
       </ol>
     </section>
     <!-- Main content -->
@@ -62,8 +60,8 @@
 <script src="{{asset('vendors/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('vendors/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{asset('vendors/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- <script src="{{asset('vendors/parsley/dist/parsley.min.js')}}"></script> -->
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
 <!-- page script -->
 <script>
   $(function () {

@@ -1,10 +1,12 @@
 @extends('layouts.employee')
+@section('sub_breadcrumb')
+ <i class="glyphicon glyphicon-user"></i> Dashboard
+@endsection
 @section('content')
-<div class="row">
+<div class="row"> 
   <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="info-box">
       <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-calendar"></i></span>
-
       <div class="info-box-content">
       <small>
         @if($status)

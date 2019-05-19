@@ -64,4 +64,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Leaves::class, 'leave_user');
     }
+     /**
+     * The leaves that belong to the user.
+     */
+    public function breaks()
+    {
+        return $this->belongsToMany(Leaves::class, 'breaks');
+    }
 }

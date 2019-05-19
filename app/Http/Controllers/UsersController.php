@@ -29,7 +29,29 @@ class UsersController extends Controller
 
         return view('authentication.users.index',compact('users'));
     }
+    /**
+     * Display a listing of the admin of this system.
+     *
+     * @param  \App\lain  $lain
+     * @return \Illuminate\Http\Response
+     */
+    public function admin()
+    {
+        $users = User::where('role',1)->get();
 
+        return view('authentication.users.admin',compact('users'));
+    }
+    /**
+     * Display a listing of the admin of this system.
+     *
+     * @param  \App\lain  $lain
+     * @return \Illuminate\Http\Response
+     */
+    public function employee()
+    {
+        $users = User::where('role',0)->get();
+        return view('authentication.users.admin',compact('users'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -50,32 +72,32 @@ class UsersController extends Controller
      */
     public function store(Request $request) 
     { 
-        $this->validate($request, [
-            'profile_avatar' =>'required|mimes:jpeg,jpg,png|max:2048',
+        $validator = \Validator::make($request->all(), [
             'full_name' => 'required|max:50',
             'username' => 'required|max:50',
-            'role' => '',
+            'role' => 'required',
             'status' => '',
             'email' => 'required|email|unique:users',
-            'password'=>'required',
-            'password_confirmation' => 'required',
+            'password'=>'required|same:password_confirmation',
+            'password_confirmation' => 'required|same:password',
         ]);
-        if( $request->password === $request->password_confirmation)
+        if ($validator->fails()) { 
+            return response()->json(['errors' => $validator->errors()]);
+         }
+        if( $request->hasFile('profile_avatar'))
         {
-            $image_name = fileUpload('backend/images/avatar', $request->file('profile_avatar'));
+            $validator = \Validator::make($request->all(), [
+                'profile_avatar' =>'required|mimes:jpeg,jpg,png|max:2048',
+                ]);
+            if ($validator->fails()) { 
+                return response()->json(['errors' => $validator->errors()]);
+                }
+            $image_name = fileUpload('images/avatar', $request->file('profile_avatar'));
             User::create($request->except('profile_avatar')+['avatar' => $image_name]);
-            $message = [
-                'success' => 'User created successfully !!',
-                ]; 
-             return response()->json($message);  
+            return response()->json(['status' => 'User created sucessfully!!',]); 
         }
-        else
-        {
-            $message = [
-                'success' => 'Password not matched !!',
-                ]; 
-                return response()->json($message); 
-        }
+        User::create($request->all());
+        return response()->json(['status' => 'User created sucessfully!!',]); 
     }
 
     /**
@@ -115,38 +137,38 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = \Validator::make($request->all(), [
+            'full_name' => 'required|max:50',
+            'username' => 'required|max:50',
+            'role' => 'required',
+            'status' => '',
+            'email' => 'required|unique:users,email,'.$id,
+            // 'password'=>'required|same:password_confirmation',
+            // 'password_confirmation' => 'required|same:password',
+        ]);
+        if ($validator->fails()) { 
+            return response()->json(['errors' => $validator->errors()]);
+         }
+
+         $user = User::findOrFail($id);
+
          if($request->file('profile_avatar')){
-            $validateData = $request->validate([
-                'profile_avatar' =>'mimes:jpeg,jpg,png|max:2048',
-                'full_name' => 'required|max:50',
-                'username' => 'required|max:50',
-                'role' => '',
-                'status' => '',
-                'email' => 'required|unique:users,email,'.$id,
-            ]);
-              $image_name = fileUpload('backend/images/avatar', $request->file('profile_avatar'));
-                User::where('id',$id)
-                ->update($request->except('profile_avatar','password_confirmation')+['avatar' => $image_name]);
-                $message = [
-                    'success' => 'User Updated successfully !!',
-                ]; 
-                return response()->json($message); 
-            }else{
-                $validateData = $request->validate([
-                'full_name' => 'required|max:50',
-                'username' => 'required|max:50',
-                'role' => '',
-                'status' => '',
-                'email' => 'required|unique:users,email,'.$id,
-            ]);
-            User::where('id',$id)
-                ->update($request->except('password_confirmation','profile_avatar'));
-                $message = [
-                'success' => 'User Updated successfully imagenot !!',
-            ]; 
-             return response()->json($message); 
-            }
-            
+            $validator = \Validator::make($request->all(), [
+                'profile_avatar' =>'mimes:jpeg,jpg,png|max:2048',]);
+            if ($validator->fails()) { 
+                return response()->json(['errors' => $validator->errors()]);
+                }
+
+             if(is_file(asset('image/avatar/'.$user->avatar))&& $user->avatar){
+                removeImage('images/avatar/', $user->avatar);
+             }
+            $image_name = fileUpload('images/avatar', $request->file('profile_avatar'));
+            $user ->update($request->except('profile_avatar')+['avatar' => $image_name]);
+            return response()->json([ 'status' => 'User Updated successfully !!']); 
+        }
+            User::findOrFail($id)
+            ->update($request->all());
+            return response()->json([ 'status' => 'User Updated successfully !!']); 
     }
 
     /**
@@ -158,12 +180,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        return ('hello');
-        User::findOrfail($id)->delete();
-        $message = [
-            'success' => 'User Deleted successfully !!',
-            ]; 
-        return response()->json($message);  
+        $user = User::findOrFail($id);
+        if(is_file(asset('image/avatar/'.$user->avatar)) && $user->avatar){
+            removeImage('images/avatar/', $user->avatar);
+         }
+        $user->delete(); 
+        return response()->json([ 'status' => 'User Deleted successfully !!']);  
     }
      /**
      * change status of user active or deactive the form for editing the specified resource.
@@ -174,25 +196,19 @@ class UsersController extends Controller
     public function ChangeStatus($id)
     { 
         
-        $user = User::select('status')->where('id', $id)->first();
+        $user = User::findOrFail($id);
         if($user->status == 1)
         {
            User::where('id',$id) ->update([
                      'status'=>0,
                 ]);
-            $message = [
-            'success' => 'User Deactived successfully !!',
-            ]; 
-            return response()->json($message);  
+            return response()->json(['success' => 'User Deactived successfully !!']);  
         } 
         else{
             User::where('id',$id) ->update([
                  'status'=>1,
             ]);
-           $message = [
-                'success' => 'User Actived successfully !!',
-                ]; 
-             return response()->json($message);  
+             return response()->json(['success' => 'User Actived successfully !!',]);  
         }
         
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Breaks;
+use App\User;
 use Carbon\Carbon;
 class EmployeeBreakController extends Controller
 {
@@ -70,7 +71,7 @@ class EmployeeBreakController extends Controller
         $result = Breaks::UserId()->latest()->first();
         if($result){
             if($result->break_checkin == NULL){
-                Breaks::UserId()->update(['break_checkin'=>Carbon::now()->toDateTimeString()]);
+                Breaks::UserId()->latest()->take(1)->update(['break_checkin'=>Carbon::now()->toDateTimeString()]);
                 return response()->json(['status' => 'You Checkedin Break!!',]);
             }
         }
@@ -87,6 +88,17 @@ class EmployeeBreakController extends Controller
     {
         $breaks = Breaks::UserId()->latest()->paginate(7);
         return view('employee.breaks_history',compact('breaks'));
+    }
+     /**
+     * Show the form for information about employee attendance.
+     *
+     * @param  \App\request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function adminHistory(Request $request, $id)
+    {
+        $breaks = Breaks::where('user_id',$id)->latest()->paginate(7);
+        return view('authentication.breaks_history',compact('breaks'));
     }
 
     /**
