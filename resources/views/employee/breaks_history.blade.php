@@ -17,7 +17,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4"><b>{{$break->break_checkout->format('H:i:s')}}</b></div>
-                        <div class="col-md-4">some</div>
+                        <div class="col-md-4"><b>{{$break->break_type}}</b></div>
                         <div class="col-md-4"><b>{{$break->break_checkin}}</b></div>
                     </div>
                     <!-- end history of attendance -->
@@ -25,8 +25,8 @@
                 <!-- /.box-body -->
                 </div>
     </div>
-    {{ $breaks->links() }}
   @endforeach
+  {{ $breaks->links() }}
 </div>
 @endsection
 @section('scripts')

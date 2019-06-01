@@ -39,15 +39,17 @@
               <div class="box-body">
                   <!-- break checkin -->
                   <form id="break-checkout">
-                    <div class="form-group">
+                    <div class="form-group <?php if($breaks) {echo'break_form'; }?> ">
                       <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                       <select type="text" class="form-control" name="break_type" required>
                         <option value="0">Break Type</option>
                         <option value="1">Dinner</option>
+                        <option value="2">Launch</option>
+                        <option value="3">Break Fast</option>
                       </select>
                       <div class="error text-red"></div>
                     </div>        
-                    <div class="form-group">
+                    <div class="form-group <?php if($breaks) {echo'break_form'; }?> ">
                       <label fro="reason" class="col-form-label" >Any Specific Reason</label>
                       <textarea class="form-control" rows="4" cols="40" name="break_reason" placeholder="Reason For Your Break"></textarea>
                     </div>

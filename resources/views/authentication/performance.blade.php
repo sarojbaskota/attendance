@@ -29,19 +29,19 @@ Users Details
                     <tr>
                       <td>{{$loop->iteration}}</td>
                       <td>
-                            <?php
-                                $office_checkin = new DateTime($data->office_checkin);
-                                $office_checkout = new DateTime($data->office_checkout);
-                                $office_hour = $office_checkin->diff($office_checkout);
-                                echo $office_hour->format('%h:%i');
-                            ?>
-                        </td>
-                      <td>
-                             <?php
+                      <?php
                                 $break_checkout = new DateTime($data->break_checkout);
                                 $break_checkin = new DateTime($data->break_checkin);
                                 $break_hour = $break_checkout->diff($break_checkin);
                                 echo $break_hour->format('%h:%i');
+                            ?>
+                        </td>
+                      <td>
+                      <?php
+                                $office_checkin = new DateTime($data->office_checkin);
+                                $office_checkout = new DateTime($data->office_checkout);
+                                $office_hour = $office_checkin->diff($office_checkout);
+                                echo $office_hour->format('%h:%i');
                             ?>
                       </td>
                       <td>

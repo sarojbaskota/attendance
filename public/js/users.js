@@ -65,9 +65,10 @@ $(document).ready(function () {
                         $(".role_error").text(result.errors.role);
                     }
                 }
-                swal(result.success, "success").then(function (isConfirm) {
+                swal(result.status, "success").then(function (isConfirm) {
                     $("#post_create_form").trigger("reset");
                     $("#post_create_form").modal("hide");
+                    location.reload();
                 });
             },
         });

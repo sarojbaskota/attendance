@@ -41,7 +41,7 @@
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
-                        Support Team
+                       Leave
                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4>
                       <!-- The message -->

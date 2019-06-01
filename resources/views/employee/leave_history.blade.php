@@ -23,9 +23,9 @@
                 <!-- /.box-body -->
                 </div>
     </div>
-    {{ $leaves->links() }}
   @endforeach
 </div>
+<!-- {{ $leaves->links() }} -->
 @endsection
 @section('scripts')
   <!-- script handling  -->

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $(".break_form").hide();
     var base_url = 'http://localhost:8000';
     // for checkin in office
     $(".checkin").click(function () {

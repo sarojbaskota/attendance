@@ -23,7 +23,7 @@ Users Details
                     </div>
                     <div class="row">
                         <div class="col-md-4"><b>{{$break->break_checkout->format('H:i:s')}}</b></div>
-                        <div class="col-md-4">some</div>
+                        <div class="col-md-4">{{$break->break_type}}</div>
                         <div class="col-md-4"><b>{{$break->break_checkin}}</b></div>
                     </div>
                     <!-- end history of attendance -->

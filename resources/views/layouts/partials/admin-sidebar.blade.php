@@ -22,7 +22,9 @@
         <!-- Optionally, you can add icons to the links -->
          <li class="{{ Request::segment(2) === 'dashboard' ? 'active' : null }}"><a href="{{url('administration/dashboard')}}"> <i class="fa fa-dashboard"></i> <span>Dashboard</span> <small class="label pull-right bg-green">New Feed</small></a></li>
 
-         <li class="treeview {{ Request::segment(1) === 'administration' ? 'active' : null }}">
+         <li class="treeview {{ Request::segment(2) === 'users' ? 'active' : null }}
+         {{ Request::segment(2) === 'employee' ? 'active' : null }}
+         {{ Request::segment(2) === 'admin' ? 'active' : null }}">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span>Manage Users</span>
