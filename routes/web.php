@@ -41,7 +41,7 @@
 
 	/* 
 	---------------------------------------------------
-	------------Authentication dashboard routes------------------<<<<Heelo Om>>>>>>>
+	------------Authentication dashboard routes------------------
 	---------------------------------------------------
 	*/
 	Route::group(['prefix' => 'administration','middleware' => ['auth', 'admin']], function(){
